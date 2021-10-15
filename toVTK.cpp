@@ -67,73 +67,73 @@ bool read_input(){
 
 void make_vti(int j) {
     char filename[256];
-	sprintf(filename, "%s/output_%05d.vti",OUT_DIR,j);
+    sprintf(filename, "%s/output_%05d.vti",OUT_DIR,j);
     printf("Creating %s ... ", filename);
 
-	fp=fopen(filename,"w");
-	fprintf(fp,"<?xml version='1.0' encoding='UTF-8'?>\n");
-	fprintf(fp,"<VTKFile byte_order='LittleEndian' version='0.1' type='ImageData'>\n");
-	fprintf(fp,"<ImageData WholeExtent='0 %d 0 %d 0 %d' Origin='%f %f %f' Spacing='%f %f %f'>\n",NX-1,NY-1,NZ-1,XO,YO,ZO,DX,DY,DZ);
- 	fprintf(fp,"<Piece Extent='0 %d 0 %d 0 %d'>\n",NX-1,NY-1,NZ-1);
+    fp=fopen(filename,"w");
+    fprintf(fp,"<?xml version='1.0' encoding='UTF-8'?>\n");
+    fprintf(fp,"<VTKFile byte_order='LittleEndian' version='0.1' type='ImageData'>\n");
+    fprintf(fp,"<ImageData WholeExtent='0 %d 0 %d 0 %d' Origin='%f %f %f' Spacing='%f %f %f'>\n",NX-1,NY-1,NZ-1,XO,YO,ZO,DX,DY,DZ);
+    fprintf(fp,"<Piece Extent='0 %d 0 %d 0 %d'>\n",NX-1,NY-1,NZ-1);
 
- 	fprintf(fp,"<PointData>\n");
- 	fprintf(fp,"<DataArray NumberOfComponents='1' type='Float32' Name='f' format='ascii'>\n");
-	for(int i=0;i<POINTS;i++)fprintf(fp,"%lf ",Value[i]);
- 	fprintf(fp,"\n</DataArray>\n");
-  	fprintf(fp,"</PointData>\n");
+    fprintf(fp,"<PointData>\n");
+    fprintf(fp,"<DataArray NumberOfComponents='1' type='Float32' Name='f' format='ascii'>\n");
+    for(int i=0;i<POINTS;i++)fprintf(fp,"%lf ",Value[i]);
+    fprintf(fp,"\n</DataArray>\n");
+    fprintf(fp,"</PointData>\n");
 
- 	fprintf(fp,"</Piece>\n");
- 	fprintf(fp,"</ImageData>\n");
- 	fprintf(fp,"</VTKFile>\n");
+    fprintf(fp,"</Piece>\n");
+    fprintf(fp,"</ImageData>\n");
+    fprintf(fp,"</VTKFile>\n");
 
-	fclose(fp);
-	printf("done.\n");
+    fclose(fp);
+    printf("done.\n");
 }
 
 void make_vtp(int j) {
     char filename[256];
-	sprintf(filename, "%s/line_%05d.vtp",OUT_DIR,j);
+    sprintf(filename, "%s/line_%05d.vtp",OUT_DIR,j);
     printf("Creating %s ... ", filename);
 
-	fp=fopen(filename,"w");
-	fprintf(fp,"<?xml version='1.0' encoding='UTF-8'?>\n");
-	fprintf(fp,"<VTKFile byte_order='LittleEndian' version='0.1' type='PolyData'>\n");
-	fprintf(fp,"<PolyData>");
- 	fprintf(fp,"<Piece NumberOfPoints='%d' NumberOfLines='%d' NumberOfVerts='0' NumberOfStrips='0' NumberOfPolys='0'>", num_xpoints, num_xpoints-1);
+    fp=fopen(filename,"w");
+    fprintf(fp,"<?xml version='1.0' encoding='UTF-8'?>\n");
+    fprintf(fp,"<VTKFile byte_order='LittleEndian' version='0.1' type='PolyData'>\n");
+    fprintf(fp,"<PolyData>");
+    fprintf(fp,"<Piece NumberOfPoints='%d' NumberOfLines='%d' NumberOfVerts='0' NumberOfStrips='0' NumberOfPolys='0'>", num_xpoints, num_xpoints-1);
 
- 	fprintf(fp,"<Points>\n");
- 	fprintf(fp,"<DataArray NumberOfComponents='3' type='Float32' Name='points' format='ascii'>\n");
-	for(int i=0;i<num_xpoints;i++){
+    fprintf(fp,"<Points>\n");
+    fprintf(fp,"<DataArray NumberOfComponents='3' type='Float32' Name='points' format='ascii'>\n");
+    for(int i=0;i<num_xpoints;i++){
         fprintf(fp,"%lf %lf %lf\n",zb[3*i], 0.0, zb[3*i+2]);
     }
- 	fprintf(fp,"</DataArray>\n");
-  	fprintf(fp,"</Points>\n");
-  	fprintf(fp,"<Lines>\n");
- 	fprintf(fp,"<DataArray type='Int32' Name='connectivity' format='ascii'>\n");
-	for(int i=0;i<num_xpoints-1;i++){
+    fprintf(fp,"</DataArray>\n");
+    fprintf(fp,"</Points>\n");
+    fprintf(fp,"<Lines>\n");
+    fprintf(fp,"<DataArray type='Int32' Name='connectivity' format='ascii'>\n");
+    for(int i=0;i<num_xpoints-1;i++){
         fprintf(fp,"%d %d ",i,i+1);
     }
- 	fprintf(fp,"\n</DataArray>\n");
- 	fprintf(fp,"<DataArray type='Int32' Name='offsets' format='ascii'>\n");
-	for(int i=1;i<num_xpoints;i++){
+    fprintf(fp,"\n</DataArray>\n");
+    fprintf(fp,"<DataArray type='Int32' Name='offsets' format='ascii'>\n");
+    for(int i=1;i<num_xpoints;i++){
         fprintf(fp,"%d ",2*i);
     }
- 	fprintf(fp,"\n</DataArray>\n");
-  	fprintf(fp,"</Lines>\n");
+    fprintf(fp,"\n</DataArray>\n");
+    fprintf(fp,"</Lines>\n");
 
- 	fprintf(fp,"</Piece>\n");
- 	fprintf(fp,"</PolyData>\n");
- 	fprintf(fp,"</VTKFile>\n");
+    fprintf(fp,"</Piece>\n");
+    fprintf(fp,"</PolyData>\n");
+    fprintf(fp,"</VTKFile>\n");
 
-	fclose(fp);
-	printf("done.\n");
+    fclose(fp);
+    printf("done.\n");
 }
 
 int main( int argc, char** argv) {
-	fp_in = fopen("hirano_avs.dat", "r");
-	fp_zb_inue = fopen("zb_inue_1.dat", "r");
+    fp_in = fopen("hirano_avs.dat", "r");
+    fp_zb_inue = fopen("zb_inue_1.dat", "r");
     dummy_int = system("mkdir output");
-	for(int j=0;j<STEPS;j++){
+    for(int j=0;j<STEPS;j++){
         if (read_input()){
             make_vti(j);
             make_vtp(j);
@@ -144,11 +144,11 @@ int main( int argc, char** argv) {
             printf("File End Detected: l.%d", j-1);
             break;
         }
-	}
-	printf(" END. \n");
+    }
+    printf(" END. \n");
     fclose(fp_in);
     fclose(fp_zb_inue);
 
-	return 0;
+    return 0;
 }
 
