@@ -23,9 +23,9 @@ int point_count = 0;    // "point.csv" data count
 
 void init(){
     char command[256];
-	sprintf(command, "mkdir \"%s\"",OUT_DIR);   // make output directory
+    sprintf(command, "mkdir \"%s\"",OUT_DIR);   // make output directory
     dummy_int = system(command);
-	sprintf(command, "mkdir \"%s\\animation\"",OUT_DIR);    // make directory for saving animation
+    sprintf(command, "mkdir \"%s\\animation\"",OUT_DIR);    // make directory for saving animation
     dummy_int = system(command);
 }
 
@@ -86,25 +86,25 @@ void make_particles() {
     FILE* fp;
     char filename[256];
     //////////////////
-	sprintf(filename, "%s/area.particles",OUT_DIR);
+    sprintf(filename, "%s/area.particles",OUT_DIR);
     printf("Creating %s ... ", filename);
 
-	fp=fopen(filename,"w");
-	for(int i=0;i<area_count;i++){
+    fp=fopen(filename,"w");
+    for(int i=0;i<area_count;i++){
         fprintf(fp,"%f %f %f %f\n", Area[5*i],Area[5*i+1],Area[5*i+2],Area[5*i+4]);
     }
-	fclose(fp);
-	printf("done.\n");
+    fclose(fp);
+    printf("done.\n");
     //////////////////
-	sprintf(filename, "%s/points.particles",OUT_DIR);
+    sprintf(filename, "%s/points.particles",OUT_DIR);
     printf("Creating %s ... ", filename);
 
-	fp=fopen(filename,"w");
-	for(int i=0;i<point_count;i++){
+    fp=fopen(filename,"w");
+    for(int i=0;i<point_count;i++){
         fprintf(fp,"%f %f %f %f %f\n",Point[5*i],Point[5*i+1],Point[5*i+2],Point[5*i+3]);
     }
-	fclose(fp);
-	printf("done.\n");
+    fclose(fp);
+    printf("done.\n");
 }
 
 int main( int argc, char** argv) {
@@ -113,16 +113,16 @@ int main( int argc, char** argv) {
     FILE* fp_area_csv = fopen("data1_area.csv", "r");
     FILE* fp_point_csv = fopen("data1_point.csv", "r");
 
-	read_area(fp_area_csv);
+    read_area(fp_area_csv);
     read_point(fp_point_csv);
     make_particles();
 
     free(Area);
     free(Point);
-	printf(" END. \n");
+    printf(" END. \n");
     fclose(fp_area_csv);
     fclose(fp_point_csv);
 
-	return 0;
+    return 0;
 }
 
