@@ -1,9 +1,11 @@
 # Paraviewへのファイル形式への変換例
 
 Paraviewは
+
 * レガシーVTKファイルフォーマット (.vtk)
 * XML式 VTKファイルフォーマット (.vtu, .vti, .vtp等)
-* Paraview パーティクルファイルフォーマット (.particles)   
+* Paraview パーティクルファイルフォーマット (.particles)
+
 などを読み込むことができる．
 
 ### 一覧
